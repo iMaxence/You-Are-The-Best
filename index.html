@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exams Fun</title>
+<style>
+body { text-align:center; font-family:Arial; margin-top:20px; overflow: hidden; }
+#buttonsContainer button { margin:10px; padding:10px 20px; font-size:16px; cursor:pointer; }
+#noBtn { position:absolute; left:45%; }
+#yesBtn { display:block; margin-top:20px; }
+
+/* Styles pour cœurs et étoiles animés */
+.heart, .star {
+  position: absolute;
+  font-size: 15px;
+  user-select: none;
+  pointer-events: none;
+  animation: fall 4s linear forwards;
+}
+.star {
+  color: gold;
+  font-size: 12px;
+}
+@keyframes fall {
+  to { transform: translateY(100vh) rotate(360deg); opacity:0; }
+}
+
+/* Texte final plus petit et responsive */
+#finalMessage {
+  font-size: 24px;
+  line-height: 1.2;
+  margin-top: 40px;
+}
+</style>
+</head>
+<body>
+
+<h1 id="question">Ready For Next Exams Mai ? ☺️</h1>
+<div id="buttonsContainer">
+  <button onclick="nextStep('Yes')">Yes I Think ☺️</button>
+  <button onclick="nextStep('No')">Nooooo I'm So Exhausted 🫩</button>
+</div>
+
+<script>
+let step = 0;
+let clickCount = 0;
+const maxClicks = 5;
+
+function nextStep(answer) {
+    step++;
+    const q = document.getElementById("question");
+    const container = document.getElementById("buttonsContainer");
+
+    if(step === 1) {
+        q.innerHTML = "Don't Stress, You Will Get It! 💪";
+        container.innerHTML = `
+            <button onclick="nextStep('I will')">Dai I Will! 😊</button>
+            <button onclick="nextStep('Maybe')">Maybe 😒</button>
+        `;
+    } else if(step === 2) {
+        q.innerHTML = "I'm Sure, I Believe In You Tii Rak! 🫶";
+        container.innerHTML = `
+            <button onclick="nextStep('Thanks')">Thank You! ☺️</button>
+            <button onclick="nextStep('Okay')">Okay 🙄</button>
+        `;
+    } else if(step === 3) {
+        q.innerHTML = "Do You Want My Jub Jub To Get Exam? 🤭";
+        container.innerHTML = `
+            <button id="yesBtn" onclick="nextStep('Yes')">Yesssss Jub Jub Booooooo 😚🥰</button>
+            <button id="noBtn" onclick="moveOnClick()">Noooooooooo ! 🤢🤮</button>
+        `;
+    } else {
+        // FIN : texte final et effets
+        container.innerHTML = "";
+        q.innerHTML = `<div id="finalMessage">Congratulations! You Will Success ! ❤️ I Will Always Support You ! Your Love : Maxence Mhu Noi ❤️</div>`;
+        createEffects();
+    }
+}
+
+// Bouton "No" bouge à chaque clic
+function moveOnClick() {
+    clickCount++;
+    const btn = document.getElementById("noBtn");
+
+    if(clickCount <= maxClicks) {
+        let x = Math.random() * (window.innerWidth - btn.offsetWidth);
+        let y = Math.random() * (window.innerHeight - btn.offsetHeight);
+        btn.style.left = x + "px";
+        btn.style.top = y + "px";
+    }
+
+    if(clickCount === maxClicks) {
+        btn.style.display = "none"; // disparaît après 5 clics
+    }
+}
+
+// Création d'effets : cœurs et étoiles
+function createEffects() {
+    const total = 50;
+    for(let i=0;i<total;i++){
+        // Cœurs
+        const heart = document.createElement('div');
+        heart.className = 'heart';
+        heart.innerHTML = '❤️';
+        heart.style.left = Math.random() * window.innerWidth + 'px';
+        heart.style.fontSize = (10 + Math.random()*30) + 'px';
+        heart.style.animationDuration = (3 + Math.random()*2) + 's';
+        document.body.appendChild(heart);
+
+        // Étoiles
+        const star = document.createElement('div');
+        star.className = 'star';
+        star.innerHTML = '⭐';
+        star.style.left = Math.random() * window.innerWidth + 'px';
+        star.style.fontSize = (8 + Math.random()*15) + 'px';
+        star.style.animationDuration = (3 + Math.random()*3) + 's';
+        document.body.appendChild(star);
+    }
+}
+</script>
+
+</body>
+</html>
