@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chohk Dee For Next Exams Na !</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            margin-top: 100px;
+        }
+        #buttonsContainer button {
+            margin: 10px;
+        }
+        #noBtn {
+            position: absolute;
+            left: 45%;
+        }
+    </style>
+</head>
+<body>
+
+<h1 id="question">Ready For Next Exams Mai ?</h1>
+<div id="buttonsContainer">
+    <button onclick="nextStep('Yes')">Yes I Think ☺️</button>
+    <button onclick="nextStep('No')">Nooooo I'm So Exhausted 🫩</button>
+</div>
+
+<script>
+let step = 0;
+let noMoves = 0;
+const maxNoMoves = 5; // nombre de fois que le bouton bouge
+
+function nextStep(answer) {
+    step++;
+    const container = document.getElementById("buttonsContainer");
+    const q = document.getElementById("question");
+
+    if(step == 1) {
+        q.innerHTML = "Don't Stress, You Will Get It ! 💪";
+        container.innerHTML = `
+            <button onclick="nextStep('I will')">Dai I Will ! 😊</button>
+            <button onclick="nextStep('Maybe')">Maybe 😒</button>
+        `;
+    }
+    else if(step == 2) {
+        q.innerHTML = "I'm Sure, I Believe In You Tii Rak ! 🫶";
+        container.innerHTML = `
+            <button onclick="nextStep('Thanks')">Thank You ! ☺️</button>
+            <button onclick="nextStep('Okay')">Okay 🙄</button>
+        `;
+    }
+    else if(step == 3) {
+        q.innerHTML = "Do You Want My Jub Jub To Get Exam ? 🤭";
+        container.innerHTML = `
+            <button id="yesBtn" onclick="nextStep('Yes')">Yesssss Jub Jub Booooooo 😚🥰</button>
+            <button id="noBtn">No ! 🤢🤮</button>
+        `;
+        document.getElementById("noBtn").onmouseover = moveButton;
+    }
+    else {
+        document.body.innerHTML = "<h1>Congratulations You Got It !!!!! I'm Proud Of You ❤️</h1>";
+    }
+}
+
+function moveButton() {
+    if(noMoves < maxNoMoves) {
+        let x = Math.random() * (window.innerWidth - 150); // limite pour rester visible
+        let y = Math.random() * (window.innerHeight - 50);
+
+        const btn = document.getElementById("noBtn");
+        btn.style.left = x + "px";
+        btn.style.top = y + "px";
+
+        noMoves++;
+    } else {
+        // Après 5 mouvements, le bouton disparaît
+        const btn = document.getElementById("noBtn");
+        btn.style.display = "none";
+    }
+}
+</script>
+
+</body>
+</html>
